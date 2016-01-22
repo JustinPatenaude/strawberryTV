@@ -43,12 +43,26 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+a {
+	text-decoration: none;
+}
 
 /* STYLES
 ====================================*/
+*, body * {
+	box-sizing: border-box;
+}
+
 body {
+	position: relative;
 	padding: 20px;
 	font-family: 'Source Sans Pro';
+}
+
+.login {
+	position: absolute;
+	top: 20px;
+	left: 20px;
 }
 
 .search-form {
@@ -84,6 +98,7 @@ body {
 .search-form button {
 	display: inline-block;
 	padding: 0 20px;
+	font-size: 14px;
 	text-transform: uppercase;
 	font-weight: bold;
 	line-height: 30px;
@@ -100,18 +115,36 @@ body {
 }
 
 .movie {
-	display: inline-block;
+	display: block;
 	position: relative;
-	width: 214px;
+	float: left;
+	width: calc(16.6666% - 20px);
+	height: 320px;
 	margin: 0 20px 20px 0;
+	background: #eee;
 	border-radius: 4px;
 	overflow: hidden;
     vertical-align: top;
 }
 
+.movie-icon {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	z-index: 100;
+	width: 30px;
+	height: 30px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 30px;
+	color: #fff;
+	background: #4aa3df;
+	border-radius: 50%;
+}
+
 .movie-image {
-	width: 214px;
-	height: 320px;
+	width: 100%;
+	height: 100%;
 	background-size: cover;
 	background-position: center center;
 }
@@ -155,6 +188,34 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.movie-date {
+	display: block;
+	font-size: 14px;
+}
+
 .movie-description {
 	display: none;
 }
+
+.btn {
+	display: inline-block;
+	padding: 0 20px;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: bold;
+	line-height: 30px;
+	color: #fff;
+	background: #4aa3df;
+	border: 0;
+	outline: 0!important;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.btn:hover {
+	background: #2980b9;
+}
+
+.cf:before, .cf:after { content: " "; display: table;}
+.cf:after {clear: both;}
+.cf {*zoom: 1;}
