@@ -21,26 +21,51 @@ var key = "1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM",
 apiURL = apiURL + "?alt=json";
 $.getJSON(apiURL).then(function(data) {
     console.log(data.feed.entry);
-    parseData(data.feed.entry);
+    getData(resp);
 });
-function parseData(data) { // the data object we got from Google
-    var entries = (data.feed.entry);
-    var content = {},
-    columnA = [],
-    columnB = [];
-    for(var i = 0; i < entries.length; i++) {
-        if(entries[i].title.$t.indexOf('A') != -1) {
-            columnA.push(entries[i].content.$t);
-        } else if(entries[i].title.$t.indexOf('B') != -1) {
-            columnB.push(entries[i].content.$t);
+function getData(resp) {
+    //Functions to get row and column from cell reference
+    var get_row = function(str) { return /[0-9]{1,10}/.exec(str)*1 };
+    var get_col = function(str) { return /[A-Z]{1,2}/.exec(str) };
+ 
+    var data = [];
+    var cols = ["A"];
+    var cells = resp.feed.entry;
+    var column_headers = {};
+    var number_of_cols = 0;
+    var number_of_rows = get_row(cells[cells.length-1].title.$t);
+    var row = 1;
+    var _row = {};
+ 
+    //Get column headers
+    for (i=0; i
+        var _cell_ref = cells[i].title.$t;
+        var _column = get_col(_cell_ref);
+        if (_cell_ref == "A2") {
+            break;
         }
+        else {
+            column_headers[_column] = cells[i].content.$t;
+            number_of_cols = 0;
+        };
+    };
+ 
+    //Iterate cells and build data object
+    for (i=number_of_cols; i
+        var cell_ref = cells[i].title.$t,
+            col = get_col(cell_ref);
+        if (row < get_row(cell_ref)) {
+            //new row
+            data.push(_row);
+            _row = {};
+            row++;
+        }
+        _row[column_headers[col]] = cells[i].content.$t;
     }
-    for(var i = 0; i < columnA.length; i++) {
-        content[columnA[i]] = columnB[i];
-    }
-    $.each(content, function(title, value){
-        console.log(title+' | '+value);
-    });
+    data.push(_row);
+    data.shift();
+    return data;
+    console.log(data);
 }
 
 
