@@ -39,14 +39,7 @@ function parseData(data) { // the data object we got from Google
         content[columnA[i]] = columnB[i];
     }
     $.each(content, function(title, value){
-        $('.cms').each(function(){
-            var data_content = $(this).attr('data-content');
-            console.log(title + ' | ' + value);
-            if(data_content == title){
-                var newHtml = converter.makeHtml(value);
-                $(this).append(newHtml);
-            }
-        });
+        console.log(title+' | '+value);
     });
 }
 
