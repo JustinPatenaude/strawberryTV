@@ -128,7 +128,6 @@ var loggedIn    =   false;
             success: function(resp) {
                 console.log(resp);
                 user    =   resp;
-                console.log(user);
             },
             dataType: "jsonp"
         });
