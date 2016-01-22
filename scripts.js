@@ -1,3 +1,17 @@
+var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
+var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+var SCOPE       =   'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive';
+var CLIENTID    =   '397849418785-4aqfsk8kpeuu36eapp0k5cqkk8di4u9o.apps.googleusercontent.com';
+var REDIRECT    =   'http://justinpatenaude.github.io/strawberryTV/'
+var LOGOUT      =   'http://accounts.google.com/Logout';
+var TYPE        =   'token';
+var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
+var acToken;
+var tokenType;
+var expiresIn;
+var user;
+var loggedIn    =   false;
+    
 (function($, window, document) {
     var url = 'https://api.themoviedb.org/3/',
         mode = 'search/multi',
@@ -59,20 +73,6 @@
     $('#login').click(function(){
         login();
     });
-
-    var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
-    var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
-    var SCOPE       =   'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive';
-    var CLIENTID    =   '397849418785-4aqfsk8kpeuu36eapp0k5cqkk8di4u9o.apps.googleusercontent.com';
-    var REDIRECT    =   'http://justinpatenaude.github.io/strawberryTV/'
-    var LOGOUT      =   'http://accounts.google.com/Logout';
-    var TYPE        =   'token';
-    var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
-    var acToken;
-    var tokenType;
-    var expiresIn;
-    var user;
-    var loggedIn    =   false;
 
     function login() {
         var win         =   window.open(_url, "windowname1", 'width=800, height=600'); 
