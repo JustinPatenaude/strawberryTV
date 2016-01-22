@@ -11,6 +11,7 @@ var tokenType;
 var expiresIn;
 var user;
 var loggedIn    =   false;
+window.googleDocCallback = function () { return true; };
 
 (function($, window, document) {
     var url = 'https://api.themoviedb.org/3/',
@@ -123,7 +124,7 @@ var loggedIn    =   false;
                 console.log(resp);
                 user    =   resp;
                 console.log(user);
-                var url = 'http://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken;
+                var url = 'https://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken + '&callback=googleDocCallback';
                 $.get(url, function(data) {
                     console.log(data);
                 });
