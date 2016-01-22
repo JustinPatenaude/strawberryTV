@@ -62,11 +62,23 @@ body {
 .login, .logout {
 	position: absolute;
 	top: 30px;
-	left: 20px;
+	right: 20px;
 }
 
 .logout {
 	display: none;
+}
+
+.logo {
+	position: absolute;
+	top: 30px;
+	left: 20px;
+	width: 200px;
+}
+
+.logo img {
+	max-width: 100%;
+	display: block;
 }
 
 .search-form {
