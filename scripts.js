@@ -1,6 +1,7 @@
-$('.spreadsheet').submit(function(){
+$('.spreadsheet').submit(function(e){
     var public_spreadsheet_url = $('.spreadsheet-input').val();
     init(public_spreadsheet_url);
+    e.preventDefault;
 });
 
 
