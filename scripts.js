@@ -11,7 +11,7 @@ var tokenType;
 var expiresIn;
 var user;
 var loggedIn    =   false;
-    
+
 (function($, window, document) {
     var url = 'https://api.themoviedb.org/3/',
         mode = 'search/multi',
@@ -74,6 +74,12 @@ var loggedIn    =   false;
         login();
     });
 
+    $('#logout').click(function(){
+        myIFrame.location='https://www.google.com/accounts/Logout';
+        startLogoutPolling();
+        return false;
+    });
+
     function login() {
         var win         =   window.open(_url, "windowname1", 'width=800, height=600'); 
 
@@ -102,8 +108,8 @@ var loggedIn    =   false;
             success: function(responseText){  
                 getUserInfo();
                 loggedIn = true;
-                $('#loginText').hide();
-                $('#logoutText').show();
+                $('.login').hide();
+                $('.logout').show();
             },  
             dataType: "jsonp"  
         });
@@ -114,6 +120,7 @@ var loggedIn    =   false;
             url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
             data: null,
             success: function(resp) {
+                console.log(resp);
                 user    =   resp;
                 console.log(user);
                 $('#uName').text('Welcome ' + user.name);
@@ -136,8 +143,8 @@ var loggedIn    =   false;
     }
 
     function startLogoutPolling() {
-        $('#loginText').show();
-        $('#logoutText').hide();
+        $('.login').show();
+        $('.logout').hide();
         loggedIn = false;
         $('#uName').text('Welcome ');
         $('#imgHolder').attr('src', 'none.jpg');
