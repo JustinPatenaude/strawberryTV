@@ -36,7 +36,7 @@
             success: function(json) {
                 console.log(json);
                 $.each(json.results, function(show){
-                    if(this.media_type != "person"){
+                    if(this.media_type == "tv" || this.media_type == "movie"){
                         if(this.poster_path != null){
                             var thePoster = img_url+this.poster_path
                         }
@@ -55,12 +55,12 @@
                                 theDate = this.release_date.split('-'),
                                 theDate = theDate[0];
                         }
-                        $('.movie-list').append('<div class="movie">\
+                        $('.movie-list').append('<div class="grid-item"><div class="movie" data-image="'+thePoster+'" data-title="'+theTitle+'" data-year="'+theDate+'">\
                             <div class="movie-icon">'+theIcon+'</div>\
                             <div class="movie-image" style="background-image: url('+thePoster+')"></div>\
                             <div class="movie-title"><h2>'+theTitle+'<span class="movie-date">'+theDate+'</span></h2></div>\
                             <div class="movie-description"><p>'+this.overview+'</p></div>\
-                            </div>');
+                            </div></div>');
                     }
                 });
             },
@@ -70,86 +70,93 @@
         });
     });
 
-    // $('#login').click(function(){
-    //     login();
-    // });
+    $('body').on('click', '.movie', function(){
+        var clickedTitle = $(this).attr('data-title'),
+            clickedImage = $(this).attr('data-image'),
+            clickedYear = $(this).attr('data-year');
+        console.log('Title: '+clickedTitle+' | Year: '+clickedYear+' | Image: '+clickedImage);
+    });
 
-    // $('#logout').click(function(){
-    //     myIFrame.location='https://www.google.com/accounts/Logout';
-    //     startLogoutPolling();
-    //     return false;
-    // });
+    $('#login').click(function(){
+        login();
+    });
 
-    // function login() {
-    //     var win         =   window.open(_url, "windowname1", 'width=800, height=600'); 
+    $('#logout').click(function(){
+        myIFrame.location='https://www.google.com/accounts/Logout';
+        startLogoutPolling();
+        return false;
+    });
 
-    //     var pollTimer   =   window.setInterval(function() { 
-    //         try {
-    //             console.log(win.document.URL);
-    //             if (win.document.URL.indexOf(REDIRECT) != -1) {
-    //                 window.clearInterval(pollTimer);
-    //                 var url =   win.document.URL;
-    //                 acToken =   gup(url, 'access_token');
-    //                 tokenType = gup(url, 'token_type');
-    //                 expiresIn = gup(url, 'expires_in');
-    //                 win.close();
+    function login() {
+        var win         =   window.open(_url, "windowname1", 'width=800, height=600'); 
 
-    //                 validateToken(acToken);
-    //             }
-    //         } catch(e) {
-    //         }
-    //     }, 500);
-    // }
+        var pollTimer   =   window.setInterval(function() { 
+            try {
+                console.log(win.document.URL);
+                if (win.document.URL.indexOf(REDIRECT) != -1) {
+                    window.clearInterval(pollTimer);
+                    var url =   win.document.URL;
+                    acToken =   gup(url, 'access_token');
+                    tokenType = gup(url, 'token_type');
+                    expiresIn = gup(url, 'expires_in');
+                    win.close();
 
-    // function validateToken(token) {
-    //     $.ajax({
-    //         url: VALIDURL + token,
-    //         data: null,
-    //         success: function(responseText){  
-    //             getUserInfo();
-    //             loggedIn = true;
-    //             $('.login').hide();
-    //             $('.logout').show();
-    //         },  
-    //         dataType: "jsonp"  
-    //     });
-    // }
+                    validateToken(acToken);
+                }
+            } catch(e) {
+            }
+        }, 500);
+    }
 
-    // function getUserInfo() {
-    //     $.ajax({
-    //         url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
-    //         data: null,
-    //         success: function(resp) {
-    //             console.log(resp);
-    //             user    =   resp;
-    //             console.log(user);
-    //             var url = 'https://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken;
-    //             $.get(url, function(data) {
-    //                 console.log(data);
-    //             });
-    //         },
-    //         dataType: "jsonp"
-    //     });
-    // }
+    function validateToken(token) {
+        $.ajax({
+            url: VALIDURL + token,
+            data: null,
+            success: function(responseText){  
+                getUserInfo();
+                loggedIn = true;
+                $('.login').hide();
+                $('.logout').show();
+            },  
+            dataType: "jsonp"  
+        });
+    }
 
-    // //credits: http://www.netlobo.com/url_query_string_javascript.html
-    // function gup(url, name) {
-    //     name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-    //     var regexS = "[\\#&]"+name+"=([^&#]*)";
-    //     var regex = new RegExp( regexS );
-    //     var results = regex.exec( url );
-    //     if( results == null )
-    //         return "";
-    //     else
-    //         return results[1];
-    // }
+    function getUserInfo() {
+        $.ajax({
+            url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
+            data: null,
+            success: function(resp) {
+                console.log(resp);
+                user    =   resp;
+                console.log(user);
+                var url = 'https://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken;
+                $.get(url, function(data) {
+                    console.log(data);
+                });
+            },
+            dataType: "jsonp"
+        });
+    }
 
-    // function startLogoutPolling() {
-    //     $('.login').show();
-    //     $('.logout').hide();
-    //     loggedIn = false;
-    //     $('#uName').text('Welcome ');
-    //     $('#imgHolder').attr('src', 'none.jpg');
-    // }
+    //credits: http://www.netlobo.com/url_query_string_javascript.html
+    function gup(url, name) {
+        name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var regexS = "[\\#&]"+name+"=([^&#]*)";
+        var regex = new RegExp( regexS );
+        var results = regex.exec( url );
+        if( results == null )
+            return "";
+        else
+            return results[1];
+    }
+
+    function startLogoutPolling() {
+        $('.login').show();
+        $('.logout').hide();
+        loggedIn = false;
+        $('#uName').text('Welcome ');
+        $('#imgHolder').attr('src', 'none.jpg');
+    }
 
 }(window.jQuery, window, document));
