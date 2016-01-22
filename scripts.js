@@ -21,7 +21,7 @@ var key = "1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM",
 apiURL = apiURL + "?alt=json";
 $.getJSON(apiURL).then(function(data) {
     console.log(data.feed.entry);
-    getData(resp);
+    getData(data);
 });
 function getData(resp) {
     //Functions to get row and column from cell reference
