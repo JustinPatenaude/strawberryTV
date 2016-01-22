@@ -1,11 +1,26 @@
-$('.spreadsheet').submit(function(e){
-    var public_spreadsheet_url = $('.spreadsheet-input').val();
-    init(public_spreadsheet_url);
-    e.preventDefault;
-});
+// $('.spreadsheet').submit(function(e){
+//     var public_spreadsheet_url = $('.spreadsheet-input').val();
+//     init(public_spreadsheet_url);
+//     e.preventDefault;
+// });
 
 
-function init(public_spreadsheet_url) {
+// function init(public_spreadsheet_url) {
+// Tabletop.init( { key: public_spreadsheet_url,
+//                  callback: showInfo,
+//                  simpleSheet: true } )
+// }
+
+// function showInfo(data, tabletop) {
+// alert("Successfully processed!")
+// console.log(data);
+// }
+
+window.onload = function() { init() };
+
+var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM/pubhtml';
+
+function init() {
 Tabletop.init( { key: public_spreadsheet_url,
                  callback: showInfo,
                  simpleSheet: true } )
@@ -15,6 +30,8 @@ function showInfo(data, tabletop) {
 alert("Successfully processed!")
 console.log(data);
 }
+
+
 // var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
 // var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
 // var SCOPE       =   'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive';
