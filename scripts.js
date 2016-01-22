@@ -18,7 +18,7 @@
 
 var key = "1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM",
     apiURL = "http://spreadsheets.google.com/feeds/cells/" + key + "/1/public/values";
-apiURL = apiURL + "?alt=json";
+apiURL = apiURL + "?alt=csv";
 $.getJSON(apiURL).then(function(data) {
     console.log(data.feed.entry);
     parseData(data.feed.entry);
