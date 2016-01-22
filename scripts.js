@@ -18,7 +18,7 @@
 
 window.onload = function() { init() };
 
-var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM/pubhtml';
+var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM/pub?output=csv';
 
 function init() {
 Tabletop.init( { key: public_spreadsheet_url,
