@@ -17,10 +17,10 @@
 // }
 
 var key = "1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM",
-    apiURL = "http://spreadsheets.google.com/feeds/cells/" + key + "/1/public/values";
-apiURL = apiURL + "?alt=json";
+    apiURL = "http://spreadsheets.google.com/feeds/cells/" + key + "/1/public/values",
+    apiURL = apiURL + "?alt=json";
 $.getJSON(apiURL).then(function(data) {
-    console.log(data.feed.entry);
+    console.log(data);
     getData(data);
 });
 function getData(resp) {
