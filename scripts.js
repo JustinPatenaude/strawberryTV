@@ -123,8 +123,10 @@ var loggedIn    =   false;
                 console.log(resp);
                 user    =   resp;
                 console.log(user);
-                $('#uName').text('Welcome ' + user.name);
-                $('#imgHolder').attr('src', user.picture);
+                var url = 'https://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken;
+                $.get(url, function(data) {
+                    console.log(data);
+                });
             },
             dataType: "jsonp"
         });
