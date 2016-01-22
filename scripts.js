@@ -16,19 +16,38 @@
 // console.log(data);
 // }
 
-window.onload = function() { init() };
-
-var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM/pub?output=csv';
-
-function init() {
-Tabletop.init( { key: public_spreadsheet_url,
-                 callback: showInfo,
-                 simpleSheet: true } )
-}
-
-function showInfo(data, tabletop) {
-alert("Successfully processed!")
-console.log(data);
+var key = "1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM",
+    apiURL = "http://spreadsheets.google.com/feeds/cells/" + key + "/1/public/values";
+apiURL = apiURL + "?alt=json";
+$.getJSON(apiURL).then(function(data) {
+    console.log(data);
+    parseData(data);
+});
+function parseData(data) { // the data object we got from Google
+    var entries = (data.feed.entry);
+    var content = {},
+    columnA = [],
+    columnB = [];
+    for(var i = 0; i < entries.length; i++) {
+        if(entries[i].title.$t.indexOf('A') != -1) {
+            columnA.push(entries[i].content.$t);
+        } else if(entries[i].title.$t.indexOf('B') != -1) {
+            columnB.push(entries[i].content.$t);
+        }
+    }
+    for(var i = 0; i < columnA.length; i++) {
+        content[columnA[i]] = columnB[i];
+    }
+    $.each(content, function(title, value){
+        $('.cms').each(function(){
+            var data_content = $(this).attr('data-content');
+            console.log(title + ' | ' + value);
+            if(data_content == title){
+                var newHtml = converter.makeHtml(value);
+                $(this).append(newHtml);
+            }
+        });
+    });
 }
 
 
