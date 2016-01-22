@@ -123,7 +123,7 @@ var loggedIn    =   false;
                 console.log(resp);
                 user    =   resp;
                 console.log(user);
-                var url = 'https://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken;
+                var url = 'http://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken;
                 $.get(url, function(data) {
                     console.log(data);
                 });
