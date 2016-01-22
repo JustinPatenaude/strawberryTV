@@ -34,7 +34,7 @@ var loggedIn    =   false;
             contentType: 'application/json',
             dataType: 'jsonp',
             success: function(json) {
-                console.log(json);
+                //console.log(json);
                 $.each(json.results, function(show){
                     if(this.media_type == "tv" || this.media_type == "movie"){
                         if(this.poster_path != null){
@@ -88,12 +88,10 @@ var loggedIn    =   false;
     });
 
     function login() {
-        console.log('test');
         var win         =   window.open(_url, "windowname1", 'width=800, height=600'); 
 
         var pollTimer   =   window.setInterval(function() { 
             try {
-                console.log(win.document.URL);
                 if (win.document.URL.indexOf(REDIRECT) != -1) {
                     window.clearInterval(pollTimer);
                     var url =   win.document.URL;
@@ -131,10 +129,6 @@ var loggedIn    =   false;
                 console.log(resp);
                 user    =   resp;
                 console.log(user);
-                var url = 'https://spreadsheets.google.com/feeds/spreadsheets/private/full?access_token=' + acToken;
-                $.get(url, function(data) {
-                    console.log(data);
-                });
             },
             dataType: "jsonp"
         });
