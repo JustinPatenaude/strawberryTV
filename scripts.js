@@ -16,57 +16,56 @@
 // console.log(data);
 // }
 
-var key = "1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM",
-    apiURL = "http://spreadsheets.google.com/feeds/cells/" + key + "/1/public/values",
-    apiURL = apiURL + "?alt=json";
-$.getJSON(apiURL).then(function(data) {
-    console.log(data);
-    getData(data);
-});
-function getData(resp) {
-    //Functions to get row and column from cell reference
-    var get_row = function(str) { return /[0-9]{1,10}/.exec(str)*1 };
-    var get_col = function(str) { return /[A-Z]{1,2}/.exec(str) };
+// var key = "1MVAORx23e9ttJOBv6Idn_6m2I5EeOddryW1MArtIxqM",
+//     apiURL = "http://spreadsheets.google.com/feeds/cells/" + key + "/1/public/values",
+//     apiURL = apiURL + "?alt=json";
+// $.getJSON(apiURL).then(function(data) {
+//     console.log(data);
+//     getData(data);
+// });
+// function getData(resp) {
+//     //Functions to get row and column from cell reference
+//     var get_row = function(str) { return /[0-9]{1,10}/.exec(str)*1 };
+//     var get_col = function(str) { return /[A-Z]{1,2}/.exec(str) };
  
-    var data = [];
-    var cols = ["A"];
-    var cells = resp.feed.entry;
-    var column_headers = {};
-    var number_of_cols = 0;
-    var number_of_rows = get_row(cells[cells.length-1].title.$t);
-    var row = 1;
-    var _row = {};
+//     var data = [];
+//     var cols = ["A"];
+//     var cells = resp.feed.entry;
+//     var column_headers = {};
+//     var number_of_cols = 0;
+//     var number_of_rows = get_row(cells[cells.length-1].title.$t);
+//     var row = 1;
+//     var _row = {};
  
-    //Get column headers
-    for (i=0; i
-        var _cell_ref = cells[i].title.$t;
-        var _column = get_col(_cell_ref);
-        if (_cell_ref == "A2") {
-            break;
-        }
-        else {
-            column_headers[_column] = cells[i].content.$t;
-            number_of_cols = 0;
-        };
-    };
+//     //Get column headers
+//     for (i=0; i
+//         var _cell_ref = cells[i].title.$t;
+//         var _column = get_col(_cell_ref);
+//         if (_cell_ref == "A2") {
+//             break;
+//         }
+//         else {
+//             column_headers[_column] = cells[i].content.$t;
+//             number_of_cols = 0;
+//         };
+//     };
  
-    //Iterate cells and build data object
-    for (i=number_of_cols; i
-        var cell_ref = cells[i].title.$t,
-            col = get_col(cell_ref);
-        if (row < get_row(cell_ref)) {
-            //new row
-            data.push(_row);
-            _row = {};
-            row++;
-        }
-        _row[column_headers[col]] = cells[i].content.$t;
-    }
-    data.push(_row);
-    data.shift();
-    return data;
-    console.log(data);
-}
+//     //Iterate cells and build data object
+//     for (i=number_of_cols; i
+//         var cell_ref = cells[i].title.$t,
+//             col = get_col(cell_ref);
+//         if (row < get_row(cell_ref)) {
+//             //new row
+//             data.push(_row);
+//             _row = {};
+//             row++;
+//         }
+//         _row[column_headers[col]] = cells[i].content.$t;
+//     }
+//     data.push(_row);
+//     data.shift();
+//     return data;
+// }
 
 
 // var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
